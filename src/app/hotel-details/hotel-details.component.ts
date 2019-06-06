@@ -1,6 +1,6 @@
-import { APPDB } from './../app.db';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HotelService } from './../hotels/hotel.service';
 
 @Component({
   selector: 'app-hotel-details',
@@ -13,14 +13,19 @@ export class HotelDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private hotelService: HotelService
   ) { }
 
   ngOnInit() {
+    this.getHotelDetails();
+  }
+
+  private getHotelDetails() {
     this.route.paramMap.subscribe(params => {
       const hotelCode = params.get('hotelCode');
-      this.hotel = APPDB.hotels.find( hotel => hotel.code == hotelCode);
-    })
+      this.hotel = this.hotelService.getHotelByCode(hotelCode);
+    });
   }
 
   goBack() {

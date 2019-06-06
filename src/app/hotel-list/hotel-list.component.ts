@@ -1,5 +1,6 @@
-import { APPDB } from './../app.db';
 import { Component, OnInit } from '@angular/core';
+import { Hotel } from './../hotels/hotel.model';
+import { HotelService } from './../hotels/hotel.service';
 
 @Component({
   selector: 'app-hotel-list',
@@ -8,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HotelListComponent implements OnInit {
 
-  hotels = APPDB.hotels;
-  constructor() { }
+  hotels: Hotel[];
+
+  constructor(private hotelService: HotelService) { }
 
   ngOnInit() {
+    this.getListOfHotels();
   }
 
+  private getListOfHotels() {
+    this.hotels = this.hotelService.getHotels();
+  }
 }

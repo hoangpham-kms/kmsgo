@@ -18,6 +18,6 @@ export class HotelListComponent implements OnInit {
   }
 
   private getListOfHotels() {
-    this.hotels = this.hotelService.getHotels();
+    this.hotelService.getHotels().subscribe(hotels => this.hotels = hotels);
   }
 }

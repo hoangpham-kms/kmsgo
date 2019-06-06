@@ -1,19 +1,25 @@
-import { APPDB } from './../app.db';
 import { Hotel } from './hotel.model';
 import { Injectable } from '@angular/core';
-
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class HotelService {
 
-  constructor() { }
+  //:base/:collectionName
+  private hotelsURL = 'api/hotels';
 
-  getHotels(): Hotel[] {
-    return APPDB.hotels;
+  constructor(private http: HttpClient) { }
+
+  getHotels(): Observable<Hotel[]> {
+    return this.http.get<Hotel[]>(this.hotelsURL);
   }
 
-  getHotelByCode(hotelCode: string): Hotel {
-    return APPDB.hotels.find(hotel => hotel.code == hotelCode);
+  getHotelByCode(hotelCode: string): Observable<Hotel> {
+    return this.getHotels().pipe(
+      map((hotels: Hotel[]) => hotels.find(hotel => hotel.code == hotelCode))
+    );
   }
 }

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-8">
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hotel Name</td>
+          <td>{{hotel.name}}</td>
+        </tr>
+        <tr>
+          <td>Hotel Code</td>
+          <td>{{hotel.code}}</td>
+        </tr>
+        <tr>
+          <td>Hotel Available</td>
+          <td>{{hotel.available}}</td>
+        </tr>
+        <tr>
+          <td>Hotel Price</td>
+          <td>{{hotel.price}}</td>
+        </tr>
+        <tr>
+          <td>Hotel Rating</td>
+          <td>{{hotel.rating}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-4">
+    <img src="{{hotel.image}}" class="img-thumbnail app-hotel-img">
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <button (click)="goBack()" class="btn btn-primary">Back to Hotel list</button>
+  <div>
+</div>

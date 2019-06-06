@@ -1,0 +1,27 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">#</th>
+      <th scope="col">Hotel Name</th>
+      <th scope="col">Hotel Code</th>
+      <th scope="col">Hotel Available</th>
+      <th scope="col">Hotel Price</th>
+      <th scope="col">Hotel Star Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hotel of hotels; index as no">
+      <td><img src="{{hotel.image}}" class="img-thumbnail app-hotel-img" ></td>
+      <td scope="row">{{no + 1}}</td>
+      <td><a [title]="hotel.name" [routerLink]="['/hoteldetails', hotel.code]" route>
+        {{hotel.name}}
+      </a></td>
+      <td>{{hotel.code}}</td>
+      <td>{{hotel.available}}</td>
+      <td>{{hotel.price}}</td>
+      <td>{{hotel.rating}}</td>
+    </tr>
+  </tbody>
+</table>
+

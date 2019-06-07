@@ -20,4 +20,8 @@ export class HotelListComponent implements OnInit {
   private getListOfHotels() {
     this.hotelService.getHotels().subscribe(hotels => this.hotels = hotels);
   }
+
+  filteredHotels(hotels: Hotel[]) {
+    this.hotels = hotels;
+  }
 }

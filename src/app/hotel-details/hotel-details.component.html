@@ -32,7 +32,8 @@
     </table>
   </div>
   <div class="col-4">
-    <img src="{{hotel.image}}" class="img-thumbnail app-hotel-img">
+    <p><app-toggle-button (changed)="toggleImage=$event"></app-toggle-button></p>
+    <img src="{{hotel.image}}" class="img-thumbnail app-hotel-img" *ngIf="toggleImage">
   </div>
 </div>
 <div class="row">

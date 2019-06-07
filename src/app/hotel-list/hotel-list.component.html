@@ -1,7 +1,13 @@
 <table class="table">
+  <tbody>
+      <td>Filter by:</td>
+      <td><app-hotel-filter (hotels)="filteredHotels($event)"></app-hotel-filter></td>
+  </tbody>
+</table>
+<table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Image</th>
+      <th scope="col"><app-toggle-button (changed)="toggleImage=$event"></app-toggle-button></th>
       <th scope="col">#</th>
       <th scope="col">Hotel Name</th>
       <th scope="col">Hotel Code</th>
@@ -12,7 +18,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let hotel of hotels; index as no">
-      <td><img src="{{hotel.image}}" class="img-thumbnail app-hotel-img" ></td>
+      <td><img src="{{hotel.image}}" class="img-thumbnail app-hotel-img" *ngIf="toggleImage"></td>
       <td scope="row">{{no + 1}}</td>
       <td><a [title]="hotel.name" [routerLink]="['/hoteldetails', hotel.code]" route>
         {{hotel.name}}

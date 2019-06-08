@@ -1,6 +1,6 @@
 import { Hotel } from './hotel.model';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 @Injectable({
@@ -8,10 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HotelService {
 
-  //:base/:collectionName
-  private hotelsURL = 'api/hotels';
+  filteredHotels$: Observable<Hotel[]>;
 
-  constructor(private http: HttpClient) { }
+  private hotelsURL = 'api/hotels'; // :base/:collectionName
+
+  constructor(private http: HttpClient) {
+    this.filteredHotels$ = this.getHotels();
+  }
+
+  initFilteredHotels$(filteredHotels$: Observable<Hotel[]>) {
+    this.filteredHotels$ = filteredHotels$;
+  }
 
   getHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(this.hotelsURL);
@@ -19,18 +26,19 @@ export class HotelService {
 
   getHotelByCode(hotelCode: string): Observable<Hotel> {
     return this.getHotels().pipe(
-      map((hotels: Hotel[]) => hotels.find(hotel => hotel.code == hotelCode))
+      map((hotels: Hotel[]) => hotels.find(hotel => hotel.code === hotelCode))
     );
   }
 
   searchHotels(term: string): Observable<Hotel[]> {
     if (!term.trim()) {
-      // if not search term, return empty hotel array.
-      return of([]);
+      // if not search term, return full hotel array.
+      return this.getHotels();
     }
     const searchTerm = new RegExp(term, 'i');
     return this.getHotels().pipe(
       map((hotels: Hotel[]) => hotels.filter(hotel => hotel.name.search(searchTerm) > - 1) )
-    )
+    );
   }
+
 }

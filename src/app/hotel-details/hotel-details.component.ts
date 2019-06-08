@@ -1,6 +1,9 @@
+import { Hotel } from './../hotels/hotel.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelService } from './../hotels/hotel.service';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hotel-details',
@@ -9,7 +12,7 @@ import { HotelService } from './../hotels/hotel.service';
 })
 export class HotelDetailsComponent implements OnInit {
 
-  hotel;
+  hotel$: Observable<Hotel>;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,10 +25,12 @@ export class HotelDetailsComponent implements OnInit {
   }
 
   private getHotelDetails() {
-    this.route.paramMap.subscribe(params => {
-      const hotelCode = params.get('hotelCode');
-      this.hotelService.getHotelByCode(hotelCode).subscribe(hotel => this.hotel = hotel);
-    });
+    this.hotel$ = this.route.paramMap.pipe(
+      switchMap( params => {
+        const hotelCode = params.get('hotelCode');
+        return this.hotelService.getHotelByCode(hotelCode);
+      })
+    );
   }
 
   goBack() {

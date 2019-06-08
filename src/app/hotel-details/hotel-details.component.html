@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="(hotel$ | async) as hotel">
   <div class="col-8">
     <table class="table table-borderless">
       <thead>

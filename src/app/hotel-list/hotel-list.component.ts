@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Hotel } from './../hotels/hotel.model';
 import { HotelService } from './../hotels/hotel.service';
 
@@ -7,21 +8,22 @@ import { HotelService } from './../hotels/hotel.service';
   templateUrl: './hotel-list.component.html',
   styleUrls: ['./hotel-list.component.scss']
 })
-export class HotelListComponent implements OnInit {
+export class HotelListComponent implements OnInit, AfterViewInit {
 
-  hotels: Hotel[];
+  hotels$: Observable<Hotel[]>;
 
-  constructor(private hotelService: HotelService) { }
+  constructor(private hotelService: HotelService) {
+  }
 
   ngOnInit() {
     this.getListOfHotels();
   }
 
-  private getListOfHotels() {
-    this.hotelService.getHotels().subscribe(hotels => this.hotels = hotels);
+  ngAfterViewInit(): void {
+    this.getListOfHotels();
   }
 
-  filteredHotels(hotels: Hotel[]) {
-    this.hotels = hotels;
+  private getListOfHotels() {
+    this.hotels$ = this.hotelService.filteredHotels$;
   }
 }

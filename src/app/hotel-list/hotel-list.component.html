@@ -1,7 +1,9 @@
 <table class="table">
   <tbody>
       <td>Filter by:</td>
-      <td><app-hotel-filter (hotels)="filteredHotels($event)"></app-hotel-filter></td>
+      <td>
+          <app-hotel-filter></app-hotel-filter>
+      </td>
   </tbody>
 </table>
 <table class="table">
@@ -17,7 +19,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let hotel of hotels; index as no">
+    <tr *ngFor="let hotel of hotels$ | async; index as no">
       <td><img src="{{hotel.image}}" class="img-thumbnail app-hotel-img" *ngIf="toggleImage"></td>
       <td scope="row">{{no + 1}}</td>
       <td><a [title]="hotel.name" [routerLink]="['/hoteldetails', hotel.code]" route>

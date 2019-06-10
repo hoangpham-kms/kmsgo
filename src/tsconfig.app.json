@@ -2,10 +2,13 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": []
+    "types": [],
+    "module": "esnext",
+    "target": "esnext"
   },
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
   ]
+
 }
